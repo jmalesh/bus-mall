@@ -1,4 +1,5 @@
 var randomImg = [];
+var newClick = document.getElementById('show-image');
 
 var addRight = document.getElementById('add-right');
 var addCenter = document.getElementById('add-center');
@@ -27,7 +28,7 @@ randomImg.push(new Picture('dogDuck', 'dogDuck'));
 randomImg.push(new Picture('dragon', 'dragon'));
 randomImg.push(new Picture('pen', 'pen'));
 randomImg.push(new Picture('petSweep', 'petSweep'));
-randomImg.push(new Picture('scissors', 'sissors'));
+randomImg.push(new Picture('scissors', 'scissors'));
 randomImg.push(new Picture('tauntaun', 'tauntaun'));
 randomImg.push(new Picture('unicorn', 'unicorn'));
 randomImg.push(new Picture('usb', 'usb'));
@@ -40,14 +41,47 @@ function doMath() {
   return Math.floor(Math.random() * randomImg.length);
 }
 
-var index = doMath(Picture);
+function generateThree(Picture) {
+  var img1 = doMath(Picture);
 
-var liEl = document.createElement('li');
-liEl.innerHTML = '<img src=' + randomImg[index].newPath;
-showImg.appendChild(liEl);
+  var liEl = document.createElement('li');
+  liEl.innerHTML = '<img src=' + randomImg[img1].newPath;
+  showImg.appendChild(liEl);
 
-// var li2 = document.createElement('li');
-// li2.innerHTML = '<img src=' + pic[index2].path + ' />';
-// appendImg2.appendChild(li2);
+  var img2 = doMath(Picture);
 
-doMath();
+  while (img1 === img2) {
+    img2 = doMath(Picture);
+  }
+
+  var liEl2 = document.createElement('li');
+  liEl2.innerHTML = '<img src=' + randomImg[img2].newPath;
+  showImg.appendChild(liEl2);
+
+  var img3 = doMath(Picture);
+
+  while (img3 === img1 || img3 === img2) {
+    img3 = doMath(Picture);
+  }
+
+  var liEl3 = document.createElement('li');
+  liEl3.innerHTML = '<img src=' + randomImg[img3].newPath;
+  showImg.appendChild(liEl3);
+
+  function increaseTimesClicked () {
+    Picture.timesClick += 1;
+  }
+}
+
+function handleClick(event) {
+  console.log(event);
+  event.preventDefault();
+
+  newClick.addEventListener('click',increaseTimesClicked);
+
+  for (i = 0; i < 25; i++) {
+    generateThree(Picture);
+  }
+}
+
+generateThree();
