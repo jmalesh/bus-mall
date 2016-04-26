@@ -1,4 +1,3 @@
-//Establishing globals
 var randomImg = [];
 var runningTotal = [];
 var newClick = document.getElementById('show-image');
@@ -38,59 +37,53 @@ randomImg.push(new Picture('usb', 'usb'));
 randomImg.push(new Picture('waterCan', 'waterCan'));
 randomImg.push(new Picture('wineGlass', 'wineGlass'));
 
-function doMath() {
-  return Math.floor(Math.random() * randomImg.length);
+//Array of random Numbers
+var threeDiffNums = [];
+
+function makeRand(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function generateThree() {
-  var img1 = doMath();
-
-  var divEl = document.createElement('div');
-  divEl.innerHTML = '<img src=' + randomImg[img1].newPath;
-  randomImg[img1].timesShown++;
-  showImg.appendChild(divEl);
-
-  var img2 = doMath(Picture);
-
-  while (img1 === img2) {
-    img2 = doMath();
+function checkRandom () {
+  for (var i = 0; i < 3; i++) {
+    threeDiffNums.push(makeRand(0, 9));
   }
 
-  var divEl2 = document.createElement('div');
-  divEl2.innerHTML = '<img src=' + randomImg[img2].newPath;
-  randomImg[img2].timesShown++;
-  showImg.appendChild(divEl2);
-
-  var img3 = doMath();
-
-  while (img3 === img1 || img3 === img2) {
-    img3 = doMath();
+  while (threeDiffNums[0] === threeDiffNums[1]) {
+    console.log('Duplicate Found');
+    threeDiffNums[1] = makeRand(0,9);
   }
 
-  var divEl3 = document.createElement('div');
-  divEl3.innerHTML = '<img src=' + randomImg[img3].newPath;
-  randomImg[img3].timesShown++;
-  showImg.appendChild(divEl3);
+  while (threeDiffNums[2] === threeDiffNums[0] || threeDiffNums[2] === threeDiffNums[1]) {
+    console.log('Duplicate Found');
+    threeDiffNums[2] = makeRand(0,9);
+  }
+}
 
-  // function increaseTimesClicked () {
-  //   Picture.timesClick += 1;
-  // }
+function displayImg() {
+  showImg.innerHTML = ' ';
+  //var showImg = document.getElementById('show-image');
+  for (var q = 0; q < threeDiffNums.length; q++) {
+    var divEl = document.createElement('div');
+    divEl.innerHTML = '<img src=' + randomImg[threeDiffNums[q]].newPath;
+    showImg.appendChild(divEl);
+    randomImg[threeDiffNums[q]].timesShown++;
+  }
 }
 
 function handleClick(event) {
   console.log('you done clicked on ' + event.target.alt);
-
   for (var q = 0; q < randomImg.length; q++) {
     if (event.target.alt === randomImg[q].imgName) {
       randomImg[q].timesClicked++;
     }
-    showImg.innerHTML = ' ';
-
-    generateThree();
   }
+  threeDiffNums = [];
+  checkRandom();
+  displayImg();
 }
 
 newClick.addEventListener('click', handleClick);
 
-generateThree();
-handleClick();
+checkRandom();
+displayImg();
