@@ -1,15 +1,18 @@
+//Establishing globals
 var randomImg = [];
+var runningTotal = [];
 var newClick = document.getElementById('show-image');
 
 var addRight = document.getElementById('add-right');
 var addCenter = document.getElementById('add-center');
 var addLeft = document.getElementById('add-left');
 var showImg = document.getElementById('show-image');
+
 //Img constructor function
 function Picture(imgName, filePath) {
   this.imgName = imgName;
   this.filePath = filePath;
-  this.newPath = 'img/' + this.filePath + '.jpg>';
+  this.newPath = 'img/' + this.filePath + '.jpg alt="' + this.imgName + '" />';
   this.timesShown = 0;
   this.timesClicked = 0;
   //randomImg.push(this);
@@ -35,53 +38,50 @@ randomImg.push(new Picture('usb', 'usb'));
 randomImg.push(new Picture('waterCan', 'waterCan'));
 randomImg.push(new Picture('wineGlass', 'wineGlass'));
 
-var tryThis;
-
 function doMath() {
   return Math.floor(Math.random() * randomImg.length);
 }
 
-function generateThree(Picture) {
-  var img1 = doMath(Picture);
+function generateThree() {
+  var img1 = doMath();
 
-  var liEl = document.createElement('li');
-  liEl.innerHTML = '<img src=' + randomImg[img1].newPath;
-  showImg.appendChild(liEl);
+  var divEl = document.createElement('div');
+  divEl.innerHTML = '<img src=' + randomImg[img1].newPath;
+  showImg.appendChild(divEl);
 
   var img2 = doMath(Picture);
 
   while (img1 === img2) {
-    img2 = doMath(Picture);
+    img2 = doMath();
   }
 
-  var liEl2 = document.createElement('li');
-  liEl2.innerHTML = '<img src=' + randomImg[img2].newPath;
-  showImg.appendChild(liEl2);
+  var divEl2 = document.createElement('div');
+  divEl2.innerHTML = '<img src=' + randomImg[img2].newPath;
+  showImg.appendChild(divEl2);
 
-  var img3 = doMath(Picture);
+  var img3 = doMath();
 
   while (img3 === img1 || img3 === img2) {
-    img3 = doMath(Picture);
+    img3 = doMath();
   }
 
-  var liEl3 = document.createElement('li');
-  liEl3.innerHTML = '<img src=' + randomImg[img3].newPath;
-  showImg.appendChild(liEl3);
+  var divEl3 = document.createElement('div');
+  divEl3.innerHTML = '<img src=' + randomImg[img3].newPath;
+  showImg.appendChild(divEl3);
 
-  function increaseTimesClicked () {
-    Picture.timesClick += 1;
-  }
+  // function increaseTimesClicked () {
+  //   Picture.timesClick += 1;
+  // }
 }
 
 function handleClick(event) {
-  console.log(event);
-  event.preventDefault();
-
-  newClick.addEventListener('click',increaseTimesClicked);
-
-  for (i = 0; i < 25; i++) {
-    generateThree(Picture);
-  }
+  console.log('you done clicked on ' + event.target.alt);
+  this.timesClicked = +1;
+  showImg.innerHTML = ' ';
+  generateThree();
 }
 
+newClick.addEventListener('click', handleClick);
+
 generateThree();
+handleClick();
