@@ -35,20 +35,21 @@ randomImg.push(new Picture('usb', 'usb'));
 randomImg.push(new Picture('waterCan', 'waterCan'));
 randomImg.push(new Picture('wineGlass', 'wineGlass'));
 
-var tryThis;
+var tryThis;                                              //this var never gets used
 
 function doMath() {
   return Math.floor(Math.random() * randomImg.length);
 }
 
-function generateThree(Picture) {
-  var img1 = doMath(Picture);
+function generateThree(Picture) {   //the parameter Picture doesn't make sense. Picture is your constructor function, which shouldn't be used as a function parameter
+                                    //also you don't pass any value as an argument when you call generateThree on line 88, so Picture has no value right now
+  var img1 = doMath(Picture);       //doMath doesn't take any arguments, so you can't call it with 'Picture'
 
-  var liEl = document.createElement('li');
+  var liEl = document.createElement('li');    //strongly recommend you switch these li's to divs so you don't get the li dots in your DOM
   liEl.innerHTML = '<img src=' + randomImg[img1].newPath;
   showImg.appendChild(liEl);
 
-  var img2 = doMath(Picture);
+  var img2 = doMath(Picture);             //this logic is all good. proper checking for non-duplicate images
 
   while (img1 === img2) {
     img2 = doMath(Picture);
@@ -68,18 +69,18 @@ function generateThree(Picture) {
   liEl3.innerHTML = '<img src=' + randomImg[img3].newPath;
   showImg.appendChild(liEl3);
 
-  function increaseTimesClicked () {
-    Picture.timesClick += 1;
+  function increaseTimesClicked () {  //this function is stuck inside the generateThree function. it should be moved out to global space.
+    Picture.timesClick += 1;  //Picture still has no value here. Also the timesClick property doesn't exist in your constructor, so you can't increment it.
   }
 }
 
 function handleClick(event) {
   console.log(event);
-  event.preventDefault();
+  event.preventDefault();   //not necessary for a click event
 
-  newClick.addEventListener('click',increaseTimesClicked);
+  newClick.addEventListener('click',increaseTimesClicked);  //this should happen outside the handleClick function. otherwise it'll never happen
 
-  for (i = 0; i < 25; i++) {
+  for (i = 0; i < 25; i++) {    //this won't work because 'i' would reset to zero each time handleClick runs, so you would never get to 25. try making a global totalClicks variable to track that
     generateThree(Picture);
   }
 }
