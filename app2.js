@@ -6,6 +6,7 @@ var addRight = document.getElementById('add-right');
 var addCenter = document.getElementById('add-center');
 var addLeft = document.getElementById('add-left');
 var showImg = document.getElementById('show-image');
+var button3 = document.getElementById('button3');
 
 //Img constructor function
 function Picture(imgName, filePath) {
@@ -46,17 +47,17 @@ function makeRand(min, max) {
 
 function checkRandom () {
   for (var i = 0; i < 3; i++) {
-    threeDiffNums.push(makeRand(0, 9));
+    threeDiffNums.push(makeRand(0, 17));
   }
 
   while (threeDiffNums[0] === threeDiffNums[1]) {
     console.log('Duplicate Found');
-    threeDiffNums[1] = makeRand(0,9);
+    threeDiffNums[1] = makeRand(0,17);
   }
 
   while (threeDiffNums[2] === threeDiffNums[0] || threeDiffNums[2] === threeDiffNums[1]) {
     console.log('Duplicate Found');
-    threeDiffNums[2] = makeRand(0,9);
+    threeDiffNums[2] = makeRand(0,17);
   }
 }
 
@@ -70,8 +71,10 @@ function displayImg() {
     randomImg[threeDiffNums[q]].timesShown++;
   }
 }
+var onlyClicks = 0;
 
 function handleClick(event) {
+  onlyClicks++;
   console.log('you done clicked on ' + event.target.alt);
   for (var q = 0; q < randomImg.length; q++) {
     if (event.target.alt === randomImg[q].imgName) {
@@ -81,9 +84,46 @@ function handleClick(event) {
   threeDiffNums = [];
   checkRandom();
   displayImg();
+  if (onlyClicks === 5) {
+    document.getElementById('button2').style.visibility = 'visible';
+    document.getElementById('button3').style.visibility = 'visible';
+    showImg.style.visibility = 'hidden';
+  }
+}
+//}
+
+function handleButton3(event) {
+  event.preventDefault;
+  displayImg();
+  var onlyClicks = 0;
+  onlyClicks++;
+  console.log('you done clicked on the button');
+  document.getElementById('button2').style.visibility = 'hidden';
+  document.getElementById('button3').style.visibility = 'hidden';
+  showImg.style.visibility = 'visible';
+  handleClick();
+  // for (var q = 0; q < randomImg.length; q++) {
+  //   if (event.target.alt === randomImg[q].imgName) {
+  //     randomImg[q].timesClicked++;
+  //   }
+  // }
+  // threeDiffNums = [];
+  // checkRandom();
+  // displayImg();
+  // if (onlyClicks === 5) {
+  //   document.getElementById('button2').style.visibility = 'visible';
+  //   document.getElementById('button3').style.visibility = 'visible';
+  //   showImg.style.visibility = 'hidden';
+  // }
 }
 
 newClick.addEventListener('click', handleClick);
+button3.addEventListener('click', handleButton3);
+
+document.getElementById('button2').style.visibility = 'hidden';
+document.getElementById('button3').style.visibility = 'hidden';
+
+//button2.addEventListener('click', handleButton1);
 
 checkRandom();
 displayImg();
