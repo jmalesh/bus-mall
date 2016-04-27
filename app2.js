@@ -71,6 +71,7 @@ function displayImg() {
     randomImg[threeDiffNums[q]].timesShown++;
   }
 }
+
 var onlyClicks = 0;
 
 function handleClick(event) {
@@ -84,37 +85,19 @@ function handleClick(event) {
   threeDiffNums = [];
   checkRandom();
   displayImg();
-  if (onlyClicks === 5) {
+  if (onlyClicks === 25) {
     document.getElementById('button2').style.visibility = 'visible';
     document.getElementById('button3').style.visibility = 'visible';
     showImg.style.visibility = 'hidden';
   }
 }
-//}
 
 function handleButton3(event) {
-  event.preventDefault;
-  displayImg();
-  var onlyClicks = 0;
-  onlyClicks++;
   console.log('you done clicked on the button');
   document.getElementById('button2').style.visibility = 'hidden';
   document.getElementById('button3').style.visibility = 'hidden';
   showImg.style.visibility = 'visible';
-  handleClick();
-  // for (var q = 0; q < randomImg.length; q++) {
-  //   if (event.target.alt === randomImg[q].imgName) {
-  //     randomImg[q].timesClicked++;
-  //   }
-  // }
-  // threeDiffNums = [];
-  // checkRandom();
-  // displayImg();
-  // if (onlyClicks === 5) {
-  //   document.getElementById('button2').style.visibility = 'visible';
-  //   document.getElementById('button3').style.visibility = 'visible';
-  //   showImg.style.visibility = 'hidden';
-  // }
+  onlyClicks = 15;
 }
 
 newClick.addEventListener('click', handleClick);
