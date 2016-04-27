@@ -3,5 +3,9 @@
 }
 #show-image {
   display: flex;
-align-items: flex-start;
+  align-items: flex-start;
+}
+#size {
+  height: 500px;
+  width: 800px;
 }

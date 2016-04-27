@@ -1,12 +1,20 @@
 var randomImg = [];
 var runningTotal = [];
+var labelMyImages = [];
+var timesOnScreen = [];
+var timesBeenClicked = [];
 var newClick = document.getElementById('show-image');
+var onlyClicks = 0;
+//var chartDrawn = false;
 
 var addRight = document.getElementById('add-right');
 var addCenter = document.getElementById('add-center');
 var addLeft = document.getElementById('add-left');
 var showImg = document.getElementById('show-image');
+var button2 = document.getElementById('button2');
 var button3 = document.getElementById('button3');
+var myChart = document.getElementById('my-chart');
+var myChart3 = document.getElementById('my-chart3');
 
 //Img constructor function
 function Picture(imgName, filePath) {
@@ -72,7 +80,55 @@ function displayImg() {
   }
 }
 
-var onlyClicks = 0;
+function gatherChartData() {
+  for (z = 0; z < randomImg.length; z++) {
+    labelMyImages.push(randomImg[z].imgName);
+    timesOnScreen.push(randomImg[z].timesShown);
+    timesBeenClicked.push(randomImg[z].timesClicked);
+  }
+}
+
+var data = {
+  labels: labelMyImages,
+  datasets: [
+    {
+      label: 'Times Shown',
+      backgroundColor: 'rgba(255,99,132,0.2)',
+      borderColor: 'rgba(255,99,132,1)',
+      borderWidth: 1,
+      hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+      hoverBorderColor: 'rgba(255,99,132,1)',
+      data: timesOnScreen,
+      yAxisID: 'y-axis-0',
+    },
+    {
+      label: 'Times Selected',
+      backgroundColor: 'rgba(54,162,235,0.2)',
+      borderColor: 'rgba(54,162,235,1)',
+      borderWidth: 1,
+      hoverBackgroundColor: 'rgba(54,162,235,0.4)',
+      hoverBorderColor: 'rgba(54,162,235,1)',
+      data: timesBeenClicked,
+    }
+  ]
+};
+
+function drawChart() {
+  gatherChartData();
+  var ctx = document.getElementById('my-chart3');
+  console.log(labelMyImages, ctx);
+  var resultsChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    //options: options
+  });
+  //myChart3.appendChild(ctx);
+  //chartDrawn = true;
+}
+
+// function hideChart() {
+//   document.getElementById('my-chart3').hidden = true;
+// }
 
 function handleClick(event) {
   onlyClicks++;
@@ -90,7 +146,7 @@ function handleClick(event) {
     document.getElementById('button3').style.visibility = 'visible';
     showImg.style.visibility = 'hidden';
   }
-}
+};
 
 function handleButton3(event) {
   console.log('you done clicked on the button');
@@ -100,13 +156,17 @@ function handleButton3(event) {
   onlyClicks = 15;
 }
 
+function handleButton2(event) {
+  console.log('you are good');
+  drawChart();
+}
+
 newClick.addEventListener('click', handleClick);
 button3.addEventListener('click', handleButton3);
+button2.addEventListener('click', handleButton2);
 
 document.getElementById('button2').style.visibility = 'hidden';
 document.getElementById('button3').style.visibility = 'hidden';
-
-//button2.addEventListener('click', handleButton1);
 
 checkRandom();
 displayImg();
