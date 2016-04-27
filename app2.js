@@ -136,6 +136,7 @@ function handleClick(event) {
   for (var q = 0; q < randomImg.length; q++) {
     if (event.target.alt === randomImg[q].imgName) {
       randomImg[q].timesClicked++;
+      localStorage.setItem('photoData', JSON.stringify(randomImg));
     }
   }
   threeDiffNums = [];
@@ -160,6 +161,17 @@ function handleButton2(event) {
   console.log('you are good');
   drawChart();
 }
+
+(function checkLocal() {
+  if (localStorage.photoData) {
+    console.log('Local storage exists');
+    var parsedPhotoData = JSON.parse(localStorage.photoData);
+    randomImg = parsedPhotoData;
+    gatherChartData();
+  } else {
+    console.log('Local storage doesnt exist');
+  }
+}());
 
 newClick.addEventListener('click', handleClick);
 button3.addEventListener('click', handleButton3);
