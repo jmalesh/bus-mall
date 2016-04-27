@@ -70,12 +70,12 @@ function displayImg() {
     randomImg[threeDiffNums[q]].timesShown++;
   }
 }
-var onlyClicks = 5;
+var onlyClicks = 0;
 
 function handleClick(event) {
-  //if (onlyClicks < 5) {
+  onlyClicks++;
   console.log('you done clicked on ' + event.target.alt);
-  for (var q = 0; q < 5; q++) {
+  for (var q = 0; q < randomImg.length; q++) {
     if (event.target.alt === randomImg[q].imgName) {
       randomImg[q].timesClicked++;
     }
@@ -83,10 +83,9 @@ function handleClick(event) {
   threeDiffNums = [];
   checkRandom();
   displayImg();
-  onlyClicks--;
-}
-if (onlyClicks === 0) {
-  alert('out f clicks');
+  if (onlyClicks === 5) {
+    alert('out f clicks');
+  }
 }
 //}
 
