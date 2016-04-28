@@ -1,11 +1,53 @@
-* {
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: orange;
+}
+
+#head {
+  display: flex;
+  justify-content: center;
   align-content: center;
 }
+
+#into {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1, h3 {
+  font-family: 'Rock Salt', cursive;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+p {
+  font-family: 'Fanwood Text', serif;
+  align-items: center;
+  font-size: 25px;
+  margin-top: 0;
+}
+
 #show-image {
   display: flex;
+  justify-content: space-around;
   align-items: flex-start;
 }
+
+
 #size {
   height: 500px;
   width: 800px;
+  border-color: black;
+  border-width: medium;
 }
+
+ #button-display {
+    display: flex;
+    justify-content: center;
+ }

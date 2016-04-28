@@ -146,6 +146,7 @@ function handleClick(event) {
     document.getElementById('button2').style.visibility = 'visible';
     document.getElementById('button3').style.visibility = 'visible';
     showImg.style.visibility = 'hidden';
+    showImg.style.display = 'none';
   }
 };
 
