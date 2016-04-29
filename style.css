@@ -2,7 +2,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: orange;
+  background-color: grey;
 }
 
 #head {
@@ -41,13 +41,19 @@ p {
 
 
 #size {
+  display: flex;
+  justify-content: space-around;
   height: 500px;
   width: 800px;
-  border-color: black;
-  border-width: medium;
 }
 
  #button-display {
     display: flex;
     justify-content: center;
  }
+
+#my-chart3 {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
